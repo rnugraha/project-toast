@@ -18,14 +18,21 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ message, variant, onClose }) {
+function Toast({ children, variant, onClose }) {
+  const [isToastVisible, setIsToastVisible] = React.useState(true);
+  const handleClick = (event) => {
+    setIsToastVisible(false);
+  };
+  if (!isToastVisible) {
+    return null;
+  }
   return (
     <div className={`${styles.toast} ${styles.notice} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
         {React.createElement(ICONS_BY_VARIANT[variant], { size: 24 })}
       </div>
-      <p className={styles.content}>{message}</p>
-      <button className={styles.closeButton} onClick={() => onClose()}>
+      <p className={styles.content}>{children}</p>
+      <button className={styles.closeButton} onClick={handleClick}>
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
