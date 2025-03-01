@@ -8,7 +8,7 @@ import {
 } from "react-feather";
 
 import VisuallyHidden from "../VisuallyHidden";
-
+import { ToastContext } from "../ToastProvider";
 import styles from "./Toast.module.css";
 
 const ICONS_BY_VARIANT = {
@@ -18,9 +18,11 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ children, variant, onClose }) {
+function Toast({ children, variant, id }) {
   const [isToastVisible, setIsToastVisible] = React.useState(true);
-  const handleClick = (event) => {
+  const { removeToast } = React.useContext(ToastContext);
+  const handleClick = () => {
+    removeToast(id);
     setIsToastVisible(false);
   };
   if (!isToastVisible) {
