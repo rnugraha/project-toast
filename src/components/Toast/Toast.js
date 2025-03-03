@@ -19,15 +19,10 @@ const ICONS_BY_VARIANT = {
 };
 
 function Toast({ children, variant, id }) {
-  const [isToastVisible, setIsToastVisible] = React.useState(true);
   const { removeToast } = React.useContext(ToastContext);
   const handleClick = () => {
     removeToast(id);
-    setIsToastVisible(false);
   };
-  if (!isToastVisible) {
-    return null;
-  }
   return (
     <div className={`${styles.toast} ${styles.notice} ${styles[variant]}`}>
       <div className={styles.iconContainer}>
