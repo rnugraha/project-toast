@@ -8,6 +8,21 @@ function ToastProvider({ children }) {
   const addToast = (toast) => {
     setToasts([...toasts, toast]);
   };
+  React.useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setToasts([]);
+      }
+    });
+    return () => {
+      window.removeEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setToasts([]);
+        }
+      });
+    };
+  }, []);
+
   const removeToast = (id) => {
     setToasts(toasts.filter((toast) => toast.id !== id));
   };
