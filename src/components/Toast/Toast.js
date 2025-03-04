@@ -28,10 +28,17 @@ function Toast({ children, variant, id }) {
       <div className={styles.iconContainer}>
         {React.createElement(ICONS_BY_VARIANT[variant], { size: 24 })}
       </div>
-      <p className={styles.content}>{children}</p>
-      <button className={styles.closeButton} onClick={handleClick}>
+      <p className={styles.content}>
+        <VisuallyHidden>{variant} -</VisuallyHidden>
+        {children}
+      </p>
+      <button
+        className={styles.closeButton}
+        onClick={handleClick}
+        aria-label="Dismiss message"
+        aria-live="off"
+      >
         <X size={24} />
-        <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
     </div>
   );
