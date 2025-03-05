@@ -1,5 +1,6 @@
 import * as React from "react";
 import ToastShelf from "../ToastShelf";
+import useEscapeKey from "../../hooks/useEscapeKey";
 
 export const ToastContext = React.createContext();
 
@@ -8,20 +9,11 @@ function ToastProvider({ children }) {
   const addToast = (toast) => {
     setToasts([...toasts, toast]);
   };
-  React.useEffect(() => {
-    window.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        setToasts([]);
-      }
-    });
-    return () => {
-      window.removeEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          setToasts([]);
-        }
-      });
-    };
-  }, []);
+
+  useEscapeKey(() => {
+    // empty the toasts array when the escape key is pressed
+    setToasts([]);
+  });
 
   const removeToast = (id) => {
     setToasts(toasts.filter((toast) => toast.id !== id));
